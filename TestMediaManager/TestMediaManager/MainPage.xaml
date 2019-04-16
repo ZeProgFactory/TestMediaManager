@@ -4,11 +4,22 @@
              xmlns:local="clr-namespace:TestMediaManager"
              x:Class="TestMediaManager.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Button Text="Test" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" Clicked="Button_Clicked" />
-    </StackLayout>
+   <Grid>
+      <Grid.RowDefinitions>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Label Grid.Row="0" x:Name="labelInfo" Margin="10" BackgroundColor="LightGray" />
+
+      <StackLayout Grid.Row="1" Padding="5">
+
+         <Button Text="Audio" HorizontalOptions="Center" Clicked="Button_Audio_Clicked" />
+
+         <Button Text="Video" HorizontalOptions="Center" Clicked="Button_Video_Clicked" />
+
+         <Button Text="Play multiple"  IsEnabled="False"  HorizontalOptions="Center" Clicked="Button_PlayMultiple_Clicked" />
+      </StackLayout>
+   </Grid>
 
 </ContentPage>

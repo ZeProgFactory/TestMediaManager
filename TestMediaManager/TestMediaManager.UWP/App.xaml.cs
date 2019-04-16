@@ -1,4 +1,5 @@
-﻿using MediaManager;
+﻿
+using Plugin.MediaManager;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,7 +54,7 @@ namespace TestMediaManager.UWP
 
             rootFrame.NavigationFailed += OnNavigationFailed;
 
-            CrossMediaManager.Current.Init();
+            //CrossMediaManager.Current.Init();
 
             Xamarin.Forms.Forms.Init(e);
 
