@@ -3,9 +3,6 @@ using MediaManager;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace TestMediaManager
@@ -19,8 +16,20 @@ namespace TestMediaManager
       {
          InitializeComponent();
 
-         // Hook into events
-         CrossMediaManager.Current.StateChanged += Current_StateChanged;
+         // - - - Hook into events - - -
+         //if( Device.RuntimePlatform == Device.UWP)
+         {
+            CrossMediaManager.Current.StateChanged += Current_StateChanged;
+            CrossMediaManager.Current.PositionChanged += Current_PositionChanged;
+         };
+      }
+
+      private void Current_PositionChanged(object sender, MediaManager.Playback.PositionChangedEventArgs e)
+      {
+         Device.BeginInvokeOnMainThread(() =>
+         {
+            labelPos.Text = $"{CrossMediaManager.Current.Position}";
+         });
       }
 
       private void Current_StateChanged(object sender, MediaManager.Playback.StateChangedEventArgs e)
@@ -55,6 +64,38 @@ namespace TestMediaManager
       private async void Button_PlayMultiple_Clicked(object sender, EventArgs e)
       {
          await CrossMediaManager.Current.Play(Mp3UrlList);
+      }
+
+      private async void Button_PlayPause_Clicked(object sender, EventArgs e)
+      {
+         //await CrossMediaManager.Current.PlayPause();
+
+         switch (CrossMediaManager.Current.State)
+         {
+            case MediaManager.Playback.MediaPlayerState.Stopped:
+            case MediaManager.Playback.MediaPlayerState.Paused:
+               await CrossMediaManager.Current.Play();
+               break;
+
+            case MediaManager.Playback.MediaPlayerState.Playing:
+               await CrossMediaManager.Current.Pause();
+               break;
+         }
+      }
+
+      private async void Button_Stop_Clicked(object sender, EventArgs e)
+      {
+         await CrossMediaManager.Current.Stop();
+      }
+
+      private async void Button_StepBackward_Clicked(object sender, EventArgs e)
+      {
+         await CrossMediaManager.Current.StepBackward();
+      }
+
+      private async void Button_StepForward_Clicked(object sender, EventArgs e)
+      {
+         await CrossMediaManager.Current.StepForward();
       }
    }
 }
